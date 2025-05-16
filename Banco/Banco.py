@@ -1,21 +1,23 @@
+# banco.py
 import psycopg2
 import os
 from dotenv import load_dotenv
+import inspect
+
 load_dotenv()
 
 class Banco:
     _instance = None
 
     def __init__(self):
-        self.conn = psycopg2.connect(
-                host=os.getenv("HOST"),
-                port=os.getenv("PORT"),
-                database=os.getenv("BCD"),
-                user=os.getenv("USER"),
-                password=os.getenv("SENHA")
+        self.__conn = psycopg2.connect(
+            host=os.getenv("HOST"),
+            port=os.getenv("PORT"),
+            database=os.getenv("BCD"),
+            user=os.getenv("USER"),
+            password=os.getenv("SENHA")
         )
-        self.cursor = self.conn.cursor()
-        self.conn.commit()
+        self.__cursor = self.__conn.cursor()
 
     @classmethod
     def get_instance(cls):
@@ -24,13 +26,24 @@ class Banco:
         return cls._instance
 
     def execute(self, sql, params=()):
-        self.cursor.execute(sql, params)
-        self.conn.commit()
+        try:
+            self.__cursor.execute(sql, params)
+            self.__conn.commit()
+        except psycopg2.DatabaseError as e:
+            caller = inspect.stack()[1].function
+            print(f"Erro causado por: {caller}")
+            print("ERRO DE CONECTIVIDADE:", e)
 
     def select(self, sql, params=()):
-        self.cursor.execute(sql, params)
-        return self.cursor.fetchall()
+        try:
+            self.__cursor.execute(sql, params)
+            return self.__cursor.fetchall()
+        except psycopg2.DatabaseError as e:
+            caller = inspect.stack()[1].function
+            print(f"Erro causado por: {caller}")
+            print("ERRO DE CONECTIVIDADE:", e)
+            return []
 
     def close(self):
-        self.cursor.close()
-        self.conn.close()
+        self.__cursor.close()
+        self.__conn.close()
