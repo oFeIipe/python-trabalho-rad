@@ -11,6 +11,6 @@ print(type(aluno.nome), type(aluno.matricula), type(aluno.id_curso))
 
 repository.update_aluno(aluno)
 
-select = repository.get_alunos()
+select2000 = repository.get_alunos()
 
 print(select)
