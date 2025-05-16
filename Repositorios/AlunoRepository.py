@@ -1,7 +1,6 @@
 from Banco.Banco import Banco
 from Models.Aluno import Aluno
 
-
 class AlunoRepository:
     def __init__(self):
         self.banco = Banco.get_instance()
