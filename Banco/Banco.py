@@ -8,19 +8,19 @@ load_dotenv()
 
 comandos_criacao = [
     """
-    CREATE TABLE curso (
+    CREATE TABLE IF NOT EXISTS curso (
         id INTEGER PRIMARY KEY NOT NULL,
         nome TEXT NOT NULL
     );
     """,
     """
-    CREATE TABLE professor (
+    CREATE TABLE IF NOT EXISTS professor (
         matricula INTEGER PRIMARY KEY NOT NULL,
         nome TEXT NOT NULL
     );
     """,
     """
-    CREATE TABLE disciplina (
+    CREATE TABLE IF NOT EXISTS disciplina (
         codigo TEXT PRIMARY KEY NOT NULL,
         nome TEXT NOT NULL,
         matricula_professor INTEGER NOT NULL,
@@ -28,7 +28,7 @@ comandos_criacao = [
     );
     """,
     """
-    CREATE TABLE aluno (
+    CREATE TABLE IF NOT EXISTS aluno (
         matricula INTEGER PRIMARY KEY NOT NULL,
         nome TEXT NOT NULL,
         id_curso INTEGER NOT NULL,
@@ -36,7 +36,7 @@ comandos_criacao = [
     );
     """,
     """
-    CREATE TABLE curso_professor (
+    CREATE TABLE IF NOT EXISTS curso_professor (
         id INTEGER PRIMARY KEY NOT NULL,
         matricula_professor INTEGER NOT NULL,
         id_curso INTEGER NOT NULL,
@@ -45,7 +45,7 @@ comandos_criacao = [
     );
     """,
     """
-    CREATE TABLE curso_disciplina (
+    CREATE TABLE IF NOT EXISTS curso_disciplina (
         id INTEGER PRIMARY KEY NOT NULL,
         codigo_disciplina TEXT NOT NULL,
         id_curso INTEGER NOT NULL,
@@ -54,7 +54,7 @@ comandos_criacao = [
     );
     """,
     """
-    CREATE TABLE inscricao (
+    CREATE TABLE IF NOT EXISTS inscricao (
         id INTEGER PRIMARY KEY NOT NULL,
         ano INTEGER NOT NULL,
         semestre INTEGER NOT NULL,
