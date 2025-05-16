@@ -6,6 +6,71 @@ import inspect
 
 load_dotenv()
 
+'''
+-- Tabela: curso
+CREATE TABLE curso (
+    id INTEGER PRIMARY KEY NOT NULL,
+    nome TEXT NOT NULL
+);
+
+-- Tabela: professor
+CREATE TABLE professor (
+    matricula INTEGER PRIMARY KEY NOT NULL,
+    nome TEXT NOT NULL
+);
+
+-- Tabela: disciplina
+CREATE TABLE disciplina (
+    codigo TEXT PRIMARY KEY NOT NULL,
+    nome TEXT NOT NULL,
+    matricula_professor INTEGER NOT NULL,
+    FOREIGN KEY (matricula_professor) REFERENCES professor(matricula)
+);
+
+-- Tabela: aluno
+CREATE TABLE aluno (
+    matricula INTEGER PRIMARY KEY NOT NULL,
+    nome TEXT NOT NULL,
+    id_curso INTEGER NOT NULL,
+    FOREIGN KEY (id_curso) REFERENCES curso(id)
+);
+
+-- Tabela: curso_professor (N:N)
+CREATE TABLE curso_professor (
+    id INTEGER PRIMARY KEY NOT NULL,
+    matricula_professor INTEGER NOT NULL,
+    id_curso INTEGER NOT NULL,
+    FOREIGN KEY (matricula_professor) REFERENCES professor(matricula),
+    FOREIGN KEY (id_curso) REFERENCES curso(id)
+);
+
+-- Tabela: curso_disciplina (N:N)
+CREATE TABLE curso_disciplina (
+    id INTEGER PRIMARY KEY NOT NULL,
+    codigo_disciplina TEXT NOT NULL,
+    id_curso INTEGER NOT NULL,
+    FOREIGN KEY (codigo_disciplina) REFERENCES disciplina(codigo),
+    FOREIGN KEY (id_curso) REFERENCES curso(id)
+);
+
+-- Tabela: inscricao (matrícula do aluno na disciplina)
+CREATE TABLE inscricao (
+    id INTEGER PRIMARY KEY NOT NULL,
+    ano INTEGER NOT NULL,
+    semestre INTEGER NOT NULL,
+    simulado_1 REAL,
+    sim2 REAL,
+    av REAL,
+    avs REAL,
+    nf REAL,
+    situacao TEXT,
+    matricula_aluno INTEGER NOT NULL,
+    codigo_disciplina TEXT NOT NULL,
+    FOREIGN KEY (matricula_aluno) REFERENCES aluno(matricula),
+    FOREIGN KEY (codigo_disciplina) REFERENCES disciplina(codigo)
+);
+'''
+
 class Banco:
     _instance = None
 
