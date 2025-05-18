@@ -15,9 +15,11 @@ class AlunoRepository:
     def get_aluno_by_matricula(self, matricula: int) -> tuple:
         return self.banco.select("SELECT * FROM aluno WHERE matricula = ?", (matricula,))
 
-    def update_aluno(self, aluno: Aluno):
-        self.banco.execute("UPDATE aluno SET nome = %s WHERE matricula = ?",
-                           (aluno.nome, aluno.matricula))
+    def update_aluno(self, nome: str, matricula: int):
+        self.banco.execute("UPDATE aluno SET nome = ? WHERE matricula = ?",
+                           (nome, matricula))
+    def get_matriculas(self):
+        return self.banco.select("SELECT matricula FROM aluno", ())
 
     def delete_aluno(self, matricula: int) -> None:
-        self.banco.execute("DELETE aluno WHERE matricula = ?", (matricula,))
+        self.banco.execute("DELETE FROM aluno WHERE matricula = ?", (matricula,))

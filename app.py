@@ -4,4 +4,7 @@ from Repositorios.AlunoRepository import AlunoRepository
 
 banco = Banco.get_instance()
 
-banco.create_tables()
+aluno_repository = AlunoRepository()
+
+
+banco.close()

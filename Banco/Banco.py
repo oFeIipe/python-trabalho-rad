@@ -1,21 +1,10 @@
 import sqlite3
-import os
-from dotenv import load_dotenv
 import inspect
-
-
-load_dotenv()
 
 comandos_criacao = [
     """
     CREATE TABLE IF NOT EXISTS curso (
         id INTEGER PRIMARY KEY NOT NULL,
-        nome TEXT NOT NULL
-    );
-    """,
-    """
-    CREATE TABLE IF NOT EXISTS professor (
-        matricula INTEGER PRIMARY KEY NOT NULL,
         nome TEXT NOT NULL
     );
     """,
@@ -32,15 +21,6 @@ comandos_criacao = [
         matricula INTEGER PRIMARY KEY NOT NULL,
         nome TEXT NOT NULL,
         id_curso INTEGER NOT NULL,
-        FOREIGN KEY (id_curso) REFERENCES curso(id)
-    );
-    """,
-    """
-    CREATE TABLE IF NOT EXISTS curso_professor (
-        id INTEGER PRIMARY KEY NOT NULL,
-        matricula_professor INTEGER NOT NULL,
-        id_curso INTEGER NOT NULL,
-        FOREIGN KEY (matricula_professor) REFERENCES professor(matricula),
         FOREIGN KEY (id_curso) REFERENCES curso(id)
     );
     """,
@@ -88,6 +68,7 @@ class Banco:
         )'''
         self.__conn = sqlite3.connect('escola.db')
         self.__cursor = self.__conn.cursor()
+        self.create_tables()
 
     @classmethod
     def get_instance(cls):
