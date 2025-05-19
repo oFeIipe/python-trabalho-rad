@@ -59,13 +59,6 @@ class Banco:
     _instance = None
 
     def __init__(self):
-        '''self.__conn = psycopg2.connect(
-            host=os.getenv("HOST"),
-            port=os.getenv("PORT"),
-            database=os.getenv("BCD"),
-            user=os.getenv("USER"),
-            password=os.getenv("SENHA")
-        )'''
         self.__conn = sqlite3.connect('escola.db')
         self.__cursor = self.__conn.cursor()
         self.create_tables()
