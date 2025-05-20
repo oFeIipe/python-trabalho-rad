@@ -1,3 +1,5 @@
+from operator import truediv
+
 from Banco.Banco import Banco
 from Models.Aluno import Aluno
 
@@ -23,3 +25,8 @@ class AlunoRepository:
 
     def delete_aluno(self, matricula: int) -> None:
         self.banco.execute("DELETE FROM aluno WHERE matricula = ?", (matricula,))
+
+    def verifica_login(self, matricula: int):
+        fetch = self.banco.select("SELECT * FROM aluno WHERE matricula = ?", (matricula,))
+
+        return len(fetch) > 0

@@ -1,14 +1,17 @@
 import tkinter as tk
 from tkinter import ttk, Tk, messagebox
 
-
+from Repositorios.AlunoRepository import AlunoRepository
 from Telas.TelaCadastro import TelaCadastro
+
 
 
 class TelaLogin(tk.Frame):
     def __init__(self, parent, controller):
         super().__init__(parent)
         self.controller = controller
+
+        self.aluno_repository = AlunoRepository()
 
         ttk.Label(self, text="Faça login ou matricule-se", font=("Arial", 16, "bold")).grid(row=0, column=0, columnspan=2, pady=10, padx=10)
 
@@ -28,7 +31,14 @@ class TelaLogin(tk.Frame):
             messagebox.showerror("ERRO", "Matrícula inválida!")
             return
 
-        print(f"Matrícula digitada: {matricula}")
+        if matricula == "admin":
+            print("ADM")
+        elif self.aluno_repository.verifica_login(int(matricula)):
+            print("Sim")
+            return
+        else:
+            messagebox.showerror("ERRO", "Matrícula inválida!")
+
 
     def entrar_cadastro_aluno(self):
         self.controller.geometry("230x200")
