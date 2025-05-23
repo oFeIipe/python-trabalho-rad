@@ -1,9 +1,9 @@
 import tkinter as tk
-from tkinter import ttk, Tk, messagebox
+from tkinter import ttk, messagebox
 
 from Repositorios.AlunoRepository import AlunoRepository
-from Telas.TelaCadastro import TelaCadastro
-
+from Telas.TelaAdmin import TelaAdmin
+from Telas.TelaAluno import TelaAluno
 
 
 class TelaLogin(tk.Frame):
@@ -17,7 +17,7 @@ class TelaLogin(tk.Frame):
 
         ttk.Label(self, text="Matrícula:").grid(row=1, column=0, padx=10, pady=10, sticky="E")
 
-        self.entry_matricula = ttk.Entry(self, textvariable=controller.dados_compartilhados["matricula"])
+        self.entry_matricula = ttk.Entry(self)
         self.entry_matricula.grid(row=1, column=1, padx=10, pady=10, sticky="W")
 
         ttk.Button(self, text="Entrar", width=15, command=self.entrar_tela_inicial).grid(row=2, column=0, padx=10, pady=20)
@@ -25,21 +25,26 @@ class TelaLogin(tk.Frame):
         ttk.Button(self, text="Matricular-se", width=15, command=self.entrar_cadastro_aluno).grid(row=2, column=1, padx=10, pady=20)
 
     def entrar_tela_inicial(self):
-        matricula = self.controller.dados_compartilhados["matricula"].get()
+        matricula = self.entry_matricula.get()
 
         if len(matricula) < 4:
             messagebox.showerror("ERRO", "Matrícula inválida!")
             return
 
         if matricula == "admin":
-            print("ADM")
+            self.controller.geometry("700x330")
+            self.controller.mostrar_tela(TelaAdmin)
+
         elif self.aluno_repository.verifica_login(int(matricula)):
-            print("Sim")
-            return
+            self.controller.dados_compartilhados["matricula"].set(int(matricula))
+            self.controller.geometry("700x330")
+            self.controller.mostrar_tela(TelaAluno)
         else:
             messagebox.showerror("ERRO", "Matrícula inválida!")
 
 
+
     def entrar_cadastro_aluno(self):
+        from Telas.TelaCadastro import TelaCadastro
         self.controller.geometry("230x200")
         self.controller.mostrar_tela(TelaCadastro)
