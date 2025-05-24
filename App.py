@@ -1,5 +1,6 @@
 import tkinter as tk
 
+from Banco.Banco import Banco
 from Repositorios.AlunoRepository import AlunoRepository
 from Telas.TelaAdmin import TelaAdmin
 from Telas.TelaAluno import TelaAluno
@@ -32,7 +33,7 @@ class App(tk.Tk):
 
     def mostrar_tela(self, tela):
         frame = self.frames[tela]
-        #executa as funções da tela só quando ela é chamada
+
         if hasattr(frame, "atualiza_dados"):
             frame.atualiza_dados()
         frame.tkraise()

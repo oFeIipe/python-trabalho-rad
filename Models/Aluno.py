@@ -1,12 +1,19 @@
 import re
 from datetime import datetime
 from random import randint
+import hashlib
 
-class Aluno():
-    def __init__(self, nome: str, id_curso: int) -> None:
+
+def gerar_hesh(senha):
+    return hashlib.sha256(senha.encode()).hexdigest()
+
+class Aluno:
+    def __init__(self, nome: str, id_curso: int, senha: str) -> None:
         self.nome = nome
         self.id_curso = id_curso
-        self.matricula = self.gerar_matricula()
+        self.matricula = None
+        self.senha = gerar_hesh(senha)
+        self.gerar_matricula()
         self.format_name()
 
     def format_name(self):
@@ -18,4 +25,4 @@ class Aluno():
 
     def gerar_matricula(self):
         date = datetime.now()
-        return date.strftime("%Y%m") + str(randint(111111, 999999))
+        self.matricula =  date.strftime("%Y%m") + str(randint(111111, 999999))

@@ -21,6 +21,7 @@ comandos_criacao = [
         matricula INTEGER PRIMARY KEY NOT NULL,
         nome TEXT NOT NULL,
         id_curso INTEGER NOT NULL,
+        senha TEXT NOT NULL,
         FOREIGN KEY (id_curso) REFERENCES curso(id)
     );
     """,

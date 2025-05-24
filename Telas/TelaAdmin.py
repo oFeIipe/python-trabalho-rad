@@ -11,25 +11,24 @@ class TelaAdmin(tk.Frame):
 
         self.curso_repository = CursoRepository()
         self.aluno_repository = AlunoRepository()
-        self.dict_cursos = dict(self.curso_repository.get_cursos())
 
+        self.grid_columnconfigure(0, weight=1)
         self.controller = controller
 
         self.notebook = ttk.Notebook(self)
 
-        self.notebook.grid(column=0, row=0, pady=30)
+        self.notebook.grid(column=0, row=1, pady=30)
 
-        self.curso_frame = ttk.Frame(self.notebook, height=275, width=700)
-        self.disciplina_frame = ttk.Frame(self.notebook, height=275, width=700)
-        self.inscricoes_frame = ttk.Frame(self.notebook, height=275, width=700)
+        self.curso_frame = ttk.Frame(self.notebook, height=275, width=720)
+        self.disciplina_frame = ttk.Frame(self.notebook, height=275, width=720)
+        self.inscricoes_frame = ttk.Frame(self.notebook, height=275, width=720)
 
         self.notebook.add(self.curso_frame, text="Curso")
         self.notebook.add(self.disciplina_frame, text="Disciplina")
         self.notebook.add(self.inscricoes_frame, text="Inscrições")
 
-        #ttk.Label(self, text=f"Bem vindo ADM", font=("Arial", 16, "bold")).grid(row=0, column=1,
-                                                                                            #columnspan=3, pady=10,
-                                                                                            #padx=10)
+        ttk.Button(self, text="Sair", width=5, command=self.deslogar).place(x=670, y=20)
+
     def montar_tela(self):
         pass
 
