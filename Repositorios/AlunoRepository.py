@@ -10,6 +10,8 @@ class AlunoRepository:
     def create_aluno(self, aluno: Aluno):
         self.banco.execute("INSERT INTO aluno (matricula, nome, id_curso, senha) VALUES(?, ?, ?, ?)",
                           (aluno.matricula, aluno.nome, aluno.id_curso, aluno.senha))
+    def get_columns_name(self):
+        return self.banco.select("PRAGMA table_info(aluno)")
 
     def get_alunos(self) -> tuple:
         return self.banco.select("SELECT * FROM aluno", ())

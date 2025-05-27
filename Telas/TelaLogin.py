@@ -39,7 +39,7 @@ class TelaLogin(tk.Frame):
             return
 
         if matricula == "admin" and senha == "admin":
-            self.controller.geometry("720x330")
+            self.controller.geometry("1000x500")
             self.controller.mostrar_tela(TelaAdmin)
             self.limpar_tela()
 

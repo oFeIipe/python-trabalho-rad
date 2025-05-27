@@ -11,9 +11,7 @@ comandos_criacao = [
     """
     CREATE TABLE IF NOT EXISTS disciplina (
         codigo TEXT PRIMARY KEY NOT NULL,
-        nome TEXT NOT NULL,
-        matricula_professor INTEGER NOT NULL,
-        FOREIGN KEY (matricula_professor) REFERENCES professor(matricula)
+        nome TEXT NOT NULL
     );
     """,
     """

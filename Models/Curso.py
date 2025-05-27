@@ -1,4 +1,3 @@
 class Curso:
-    def __init__(self, curso_id: int, nome: str):
-        self.curso_id = curso_id
+    def __init__(self, nome: str) -> None:
         self.nome = nome
