@@ -13,3 +13,7 @@ class DisciplinaRepository:
 
     def get_columns_names(self):
         return self.banco.select("PRAGMA table_info(disciplina)")
+
+    def adicionar_disciplina(self, disciplina: Disciplina):
+        self.banco.execute("INSERT INTO disciplina (codigo, nome, id_curso) VALUES (?, ?, ?)",
+                           (disciplina.codigo, disciplina.nome, disciplina.id_curso))

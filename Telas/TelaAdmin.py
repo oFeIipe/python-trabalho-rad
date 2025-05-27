@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import ttk, messagebox
 
 from Models.Curso import Curso
+from Models.Disciplina import Disciplina
 from Repositorios.AlunoRepository import AlunoRepository
 from Repositorios.CursoRepository import CursoRepository
 from Repositorios.DisciplinaRepository import DisciplinaRepository
@@ -17,6 +18,8 @@ class TelaAdmin(tk.Frame):
         self.aluno_repository = AlunoRepository()
         self.disciplina_repository = DisciplinaRepository()
         self.inscricao_repository = InscricaoRepository()
+
+        self.dict_cursos = dict(self.curso_repository.get_cursos())
 
         self.grid_columnconfigure(0, weight=1)
         self.controller = controller
@@ -58,7 +61,7 @@ class TelaAdmin(tk.Frame):
         nome_curso_entry.grid(row=1, column=0, pady=5)
 
 
-        ttk.Button(frame_entrys, text="Adicionar", command=lambda: self.criar_curso(nome_curso_entry, tree)).grid(row=2,
+        ttk.Button(frame_entrys, text="Adicionar", command=lambda: self.adicionar_curso(nome_curso_entry, tree)).grid(row=2,
                                                                                                                   column=0,
                                                                                                                   pady=5)
         ttk.Button(frame_entrys, text="Editar", command=lambda: self.editar_curso(nome_curso_entry, tree)).grid(row=3,
@@ -85,18 +88,31 @@ class TelaAdmin(tk.Frame):
         self.disciplina_frame.grid_columnconfigure(1, weight=3)
         self.disciplina_frame.grid_rowconfigure(0, weight=1)
 
-        ttk.Label(frame_entrys, text="Nome: ").grid(row=0, column=0, sticky="W")
-        nome_disciplina_entry = ttk.Entry(frame_entrys, width=20)
-        nome_disciplina_entry.grid(row=1, column=0, pady=5)
-
-        ttk.Button(frame_entrys, text="Adicionar").grid(row=3, column=0, pady=10)
-
         colunas = [column[1] for column in self.disciplina_repository.get_columns_names()]
         width = int(800 / len(colunas))
 
         data = self.disciplina_repository.get_disciplinas()
 
-        Treeview(frame_tree, colunas, data, width)
+        tree = Treeview(frame_tree, colunas, data, width)
+
+        ttk.Label(frame_entrys, text="Nome: ").grid(row=0, column=0, sticky="W")
+        nome_disciplina_entry = ttk.Entry(frame_entrys, width=20)
+        nome_disciplina_entry.grid(row=1, column=0, pady=5)
+
+        ttk.Label(frame_entrys, text="Código: ").grid(row=0, column=1, sticky="W")
+        codigo_entry = ttk.Entry(frame_entrys, width=20)
+        codigo_entry.grid(row=1, column=1, pady=5)
+
+        selected_key = tk.StringVar()
+
+        ttk.Label(frame_entrys, text="Curso").grid(row=2, column=0, sticky="W")
+        combobox_curso = ttk.Combobox(frame_entrys, textvariable=selected_key,values=list(self.dict_cursos.values()),
+                                     state="readonly")
+        combobox_curso.grid(row=3, column=0, pady=5, padx=10, sticky="W")
+
+        ttk.Button(frame_entrys, text="Adicionar", command=lambda: self.adicionar_disciplina(nome_disciplina_entry, combobox_curso, codigo_entry, tree)).grid(row=3, column=1, pady=10)
+
+
 
     def draw_inscricoes_frame(self):
 
@@ -122,15 +138,31 @@ class TelaAdmin(tk.Frame):
 
         Treeview(frame_tree, colunas, data, width)
 
-    def criar_curso(self, nome_entry, tree):
+    def adicionar_curso(self, nome_entry, tree):
         if len(nome_entry.get()) > 3:
             self.curso_repository.insert_curso(Curso(nome_entry.get()))
             data = self.curso_repository.get_cursos()
             tree.atualizar(data)
             nome_entry.delete(0, tk.END)
-            messagebox.showinfo("SUCESSO", "Curso adicionada")
+            messagebox.showinfo("SUCESSO!", "Curso adicionada!")
             return
-        messagebox.showerror("ERRO", "Insira uma quantidade de caracteres válidos")
+        messagebox.showerror("ERRO!", "Não foi possível adicionar o curso")
+
+    def adicionar_disciplina(self, nome_entry, curso_entry, codigo_entry, tree):
+        nome = nome_entry.get()
+        id_curso = int({v: k for k, v in self.dict_cursos.items()}.get(curso_entry.get()))
+        codigo = codigo_entry.get()
+
+        if len(nome) > 7 and id_curso and len(codigo) > 3:
+            self.disciplina_repository.adicionar_disciplina(Disciplina(codigo, nome, id_curso))
+            data = self.disciplina_repository.get_disciplinas()
+            tree.atualizar(data)
+            nome_entry.delete(0, tk.END)
+            curso_entry.delete(0, tk.END)
+            codigo_entry.delete(0, tk.END)
+            messagebox.showinfo("SUCESSO!", "Disciplina adicionada!")
+            return
+        messagebox.showerror("ERRO!", "Não foi possível adicionar a disciplina")
 
     def deslogar(self):
        from Telas.TelaLogin import TelaLogin

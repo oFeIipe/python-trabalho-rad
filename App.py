@@ -4,6 +4,7 @@ from Banco.Banco import Banco
 from Models.Curso import Curso
 from Repositorios.AlunoRepository import AlunoRepository
 from Repositorios.CursoRepository import CursoRepository
+from Repositorios.DisciplinaRepository import DisciplinaRepository
 from Telas.TelaAdmin import TelaAdmin
 from Telas.TelaAluno import TelaAluno
 from Telas.TelaCadastro import TelaCadastro
@@ -55,6 +56,5 @@ class App(tk.Tk):
 
 if __name__ == "__main__":
     app = App()
-
     app.mainloop()
 
