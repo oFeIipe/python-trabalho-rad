@@ -111,7 +111,7 @@ class TelaAdmin(tk.Frame):
         combobox_curso.grid(row=3, column=0, pady=5, padx=10, sticky="W")
 
         ttk.Button(frame_entrys, text="Adicionar", command=lambda: self.adicionar_disciplina(nome_disciplina_entry, combobox_curso, codigo_entry, tree)).grid(row=3, column=1, pady=10)
-
+        ttk.Button(frame_entrys, text="Excluir", command=lambda: self.exluir_disciplina(tree)).grid(row=5, column=1, pady=10)
 
 
     def draw_inscricoes_frame(self):
@@ -163,6 +163,17 @@ class TelaAdmin(tk.Frame):
             messagebox.showinfo("SUCESSO!", "Disciplina adicionada!")
             return
         messagebox.showerror("ERRO!", "Não foi possível adicionar a disciplina")
+
+    def exluir_disciplina(self, tree):
+        selected_item = tree.focus()
+        if selected_item:
+            values = tree.item(selected_item, 'values')
+            self.disciplina_repository.remove(values[0])
+            data = self.disciplina_repository.get_disciplinas()
+            tree.atualizar(data)
+            messagebox.showinfo("SUCESSO!", "Disciplina removida!")
+            return
+        messagebox.showerror("ERRO!", "Não foi possível remover a disciplina")
 
     def deslogar(self):
        from Telas.TelaLogin import TelaLogin

@@ -17,3 +17,6 @@ class DisciplinaRepository:
     def adicionar_disciplina(self, disciplina: Disciplina):
         self.banco.execute("INSERT INTO disciplina (codigo, nome, id_curso) VALUES (?, ?, ?)",
                            (disciplina.codigo, disciplina.nome, disciplina.id_curso))
+
+    def remove(self, codigo: str):
+        self.banco.execute("DELETE FROM disciplina WHERE codigo = ?", (codigo,))
