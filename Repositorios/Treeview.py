@@ -7,6 +7,7 @@ class Treeview(ttk.Treeview):
 
         for col in colunas:
             self.heading(col, text=col)
+            self.column(col, width=110)
 
         self.pack(expand=True, fill="both")
 

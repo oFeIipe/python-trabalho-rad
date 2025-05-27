@@ -51,51 +51,9 @@ class App(tk.Tk):
 
         if hasattr(frame, "atualiza_dados"):
             frame.atualiza_dados()
+        if hasattr(frame, "atualiza_view_cursos")   :
+            frame.atualiza_view_cursos()
         frame.tkraise()
-
-cursos = [
-    "Agronomia",
-    "Arquitetura e Urbanismo",
-    "Artes Cênicas",
-    "Artes Visuais",
-    "Biomedicina",
-    "Biologia",
-    "Ciências Contábeis",
-    "Ciências Econômicas",
-    "Cinema",
-    "Design Gráfico",
-    "Design de Produto",
-    "Educação Física",
-    "Engenharia Aeronáutica",
-    "Engenharia Ambiental",
-    "Engenharia de Alimentos",
-    "Engenharia de Computação",
-    "Engenharia de Controle e Automação",
-    "Engenharia de Software",
-    "Engenharia Eletrônica",
-    "Engenharia Mecânica",
-    "Engenharia Mecatrônica",
-    "Engenharia Química",
-    "Estatística",
-    "Farmácia",
-    "Filosofia",
-    "Física",
-    "Fisioterapia",
-    "Fonoaudiologia",
-    "Gastronomia",
-    "Geografia",
-    "Geologia",
-    "Gestão de Recursos Humanos",
-    "História",
-    "Jogos Digitais",
-    "Jornalismo",
-    "Letras",
-    "Logística",
-    "Marketing",
-    "Matemática",
-    "Medicina Veterinária",
-    "Nutrição",
-]
 
 if __name__ == "__main__":
     app = App()

@@ -24,20 +24,11 @@ comandos_criacao = [
     );
     """,
     """
-    CREATE TABLE IF NOT EXISTS curso_disciplina (
-        id INTEGER PRIMARY KEY NOT NULL,
-        codigo_disciplina TEXT NOT NULL,
-        id_curso INTEGER NOT NULL,
-        FOREIGN KEY (codigo_disciplina) REFERENCES disciplina(codigo),
-        FOREIGN KEY (id_curso) REFERENCES curso(id)
-    );
-    """,
-    """
     CREATE TABLE IF NOT EXISTS inscricao (
         id INTEGER PRIMARY KEY NOT NULL,
         ano INTEGER NOT NULL,
         semestre INTEGER NOT NULL,
-        simulado_1 REAL,
+        sim1 REAL,
         sim2 REAL,
         av REAL,
         avs REAL,
