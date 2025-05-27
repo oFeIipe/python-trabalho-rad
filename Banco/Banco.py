@@ -11,7 +11,9 @@ comandos_criacao = [
     """
     CREATE TABLE IF NOT EXISTS disciplina (
         codigo TEXT PRIMARY KEY NOT NULL,
-        nome TEXT NOT NULL
+        nome TEXT NOT NULL,
+        id_curso INTEGER NOT NULL,
+        FOREIGN KEY (id_curso) REFERENCES curso(id)
     );
     """,
     """

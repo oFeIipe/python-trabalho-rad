@@ -21,7 +21,7 @@ class TelaAdmin(tk.Frame):
         self.grid_columnconfigure(0, weight=1)
         self.controller = controller
 
-        self.notebook = ttk.Notebook(self)
+        self.notebook = ttk.Notebook(self, width=1125)
 
         self.notebook.grid(column=0, row=1, pady=30)
 
@@ -41,22 +41,6 @@ class TelaAdmin(tk.Frame):
         ttk.Button(self, text="Sair", width=5, command=self.deslogar).place(x=1060, y=10)
 
 
-        '''self.notebook.bind("<<NotebookTabChanged>>", self.ajustar_tamanho_aba)
-
-
-        self.after(100, self.ajustar_tamanho_aba)
-
-    def ajustar_tamanho_aba(self, event=None):
-        aba_atual = self.notebook.select()
-        frame = self.notebook.nametowidget(aba_atual)
-
-        frame.update_idletasks()
-        width = frame.winfo_reqwidth()
-        height = frame.winfo_reqheight() + 100
-
-
-        self.controller.geometry(f"{width}x{height}")'''
-
     def draw_curso_frame(self):
 
         frame_entrys = ttk.Frame(self.curso_frame, padding=10)
@@ -65,6 +49,9 @@ class TelaAdmin(tk.Frame):
         frame_tree = ttk.Frame(self.curso_frame, padding=10)
         frame_tree.grid(row=0, column=1, sticky="NSE")
 
+        self.curso_frame.grid_columnconfigure(0, weight=1)
+        self.curso_frame.grid_columnconfigure(1, weight=3)
+        self.curso_frame.grid_rowconfigure(0, weight=1)
 
         ttk.Label(frame_entrys, text="Nome: ").grid(row=0, column=0, sticky="W")
         nome_curso_entry = ttk.Entry(frame_entrys, width=20)
@@ -80,12 +67,12 @@ class TelaAdmin(tk.Frame):
 
         colunas = [column[1] for column in self.curso_repository.get_columns_names()]
         data = self.curso_repository.get_cursos()
-        tree = Treeview(frame_tree, colunas, data, 250)
+        width = int(800 / len(colunas))
+
+        tree = Treeview(frame_tree, colunas, data, width)
 
         #self.treeview_curso = tree
 
-    def atualiza_view_cursos(self):
-        self.controller.geometry("300x200")
 
     def draw_disciplina_frame(self):
         frame_entrys = ttk.Frame(self.disciplina_frame, padding=10)
@@ -105,10 +92,11 @@ class TelaAdmin(tk.Frame):
         ttk.Button(frame_entrys, text="Adicionar").grid(row=3, column=0, pady=10)
 
         colunas = [column[1] for column in self.disciplina_repository.get_columns_names()]
+        width = int(800 / len(colunas))
 
         data = self.disciplina_repository.get_disciplinas()
 
-        Treeview(frame_tree, colunas, data, 200)
+        Treeview(frame_tree, colunas, data, width)
 
     def draw_inscricoes_frame(self):
 
@@ -118,10 +106,21 @@ class TelaAdmin(tk.Frame):
         frame_tree = ttk.Frame(self.inscricoes_frame, padding=10)
         frame_tree.grid(row=0, column=1, sticky="NSE")
 
+        self.inscricoes_frame.grid_columnconfigure(0, weight=1)
+        self.inscricoes_frame.grid_columnconfigure(1, weight=3)
+        self.inscricoes_frame.grid_rowconfigure(0, weight=1)
+
+        ttk.Label(frame_entrys, text="Nome: ").grid(row=0, column=0, sticky="W")
+        nome_disciplina_entry = ttk.Entry(frame_entrys, width=20)
+        nome_disciplina_entry.grid(row=1, column=0, pady=5)
+
+        ttk.Button(frame_entrys, text="Adicionar").grid(row=3, column=0, pady=10)
+
         colunas = [column[1] for column in self.inscricao_repository.get_columns_names()]
         data = self.inscricao_repository.get_inscricoes()
+        width = int(900 / len(colunas))
 
-        Treeview(frame_tree, colunas, data, 100)
+        Treeview(frame_tree, colunas, data, width)
 
     def criar_curso(self, nome_entry, tree):
         if len(nome_entry.get()) > 3:

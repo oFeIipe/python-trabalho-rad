@@ -51,11 +51,10 @@ class App(tk.Tk):
 
         if hasattr(frame, "atualiza_dados"):
             frame.atualiza_dados()
-        if hasattr(frame, "atualiza_view_cursos")   :
-            frame.atualiza_view_cursos()
         frame.tkraise()
 
 if __name__ == "__main__":
     app = App()
+
     app.mainloop()
 
