@@ -2,12 +2,12 @@ from tkinter import ttk, Scrollbar, RIGHT, Y
 
 
 class Treeview(ttk.Treeview):
-    def __init__(self, parent, colunas, data):
+    def __init__(self, parent, colunas, data, width):
         super().__init__(parent, columns=colunas, show="headings")
 
         for col in colunas:
             self.heading(col, text=col)
-            self.column(col, width=110)
+            self.column(col, width=width)
 
         self.pack(expand=True, fill="both")
 

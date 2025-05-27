@@ -41,7 +41,7 @@ class TelaAdmin(tk.Frame):
         ttk.Button(self, text="Sair", width=5, command=self.deslogar).place(x=1060, y=10)
 
 
-        self.notebook.bind("<<NotebookTabChanged>>", self.ajustar_tamanho_aba)
+        '''self.notebook.bind("<<NotebookTabChanged>>", self.ajustar_tamanho_aba)
 
 
         self.after(100, self.ajustar_tamanho_aba)
@@ -55,7 +55,7 @@ class TelaAdmin(tk.Frame):
         height = frame.winfo_reqheight() + 100
 
 
-        self.controller.geometry(f"{width}x{height}")
+        self.controller.geometry(f"{width}x{height}")'''
 
     def draw_curso_frame(self):
 
@@ -80,7 +80,7 @@ class TelaAdmin(tk.Frame):
 
         colunas = [column[1] for column in self.curso_repository.get_columns_names()]
         data = self.curso_repository.get_cursos()
-        tree = Treeview(frame_tree, colunas, data)
+        tree = Treeview(frame_tree, colunas, data, 250)
 
         #self.treeview_curso = tree
 
@@ -108,7 +108,7 @@ class TelaAdmin(tk.Frame):
 
         data = self.disciplina_repository.get_disciplinas()
 
-        Treeview(frame_tree, colunas, data)
+        Treeview(frame_tree, colunas, data, 200)
 
     def draw_inscricoes_frame(self):
 
@@ -121,7 +121,7 @@ class TelaAdmin(tk.Frame):
         colunas = [column[1] for column in self.inscricao_repository.get_columns_names()]
         data = self.inscricao_repository.get_inscricoes()
 
-        Treeview(frame_tree, colunas, data)
+        Treeview(frame_tree, colunas, data, 100)
 
     def criar_curso(self, nome_entry, tree):
         if len(nome_entry.get()) > 3:
