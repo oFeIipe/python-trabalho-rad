@@ -17,24 +17,7 @@ class App(tk.Tk):
         super().__init__()
         self.title("Sistema de Notas - Login")
         self.geometry("300x200")
-
         self.style = ttk.Style()
-
-        self.style.theme_use('default')
-
-        self.style.configure("Treeview",
-                             background="#D3D3D3",
-                             foreground="black",
-                             rowheight=25,
-                             fieldbackground="#D3D3D3")
-
-        self.style.map('Treeview',
-                       background=[('selected', "#347083")])
-
-        self.dados_compartilhados = {
-            "matricula": tk.IntVar()
-        }
-
         container = tk.Frame(self)
         container.pack(fill="both", expand=True)
 
@@ -50,9 +33,28 @@ class App(tk.Tk):
     def mostrar_tela(self, tela):
         frame = self.frames[tela]
 
+        self.estilo()
+
         if hasattr(frame, "atualiza_dados"):
             frame.atualiza_dados()
         frame.tkraise()
+
+    def estilo(self):
+
+        self.style.theme_use('default')
+
+        self.style.configure("Treeview",
+                             background="#D3D3D3",
+                             foreground="black",
+                             rowheight=25,
+                             fieldbackground="#D3D3D3")
+
+        self.style.map('Treeview',
+                       background=[('selected', "#347083")])
+
+        self.dados_compartilhados = {
+            "matricula": tk.IntVar()
+        }
 
 if __name__ == "__main__":
     app = App()

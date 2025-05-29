@@ -10,7 +10,7 @@ class InscricaoRepository:
         return self.banco.select('''SELECT 
             ano,
             semestre,
-            simulado_1,
+            sim1,
             sim2,
             av,
             avs,

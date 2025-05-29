@@ -45,8 +45,6 @@ comandos_criacao = [
 ]
 
 
-
-
 class Banco:
     _instance = None
 
