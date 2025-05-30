@@ -29,5 +29,15 @@ class Treeview(ttk.Treeview):
     def atualizar(self, data):
         for item in self.get_children():
             self.delete(item)
-        for d in data:
-            self.insert("", "end", values=(d[0], d[1]))
+        count = 0
+
+        for i in data:
+            if count % 2 == 0:
+                self.insert(parent='', index='end', iid=count, text='',
+                            values=data[count] or '',
+                            tags=('evenrow',))
+            else:
+                self.insert(parent='', index='end', iid=count, text='',
+                            values=data[count] or '',
+                            tags=('oddrow',))
+            count += 1

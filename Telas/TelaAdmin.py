@@ -108,7 +108,9 @@ class TelaAdmin(tk.Frame):
                                      state="readonly")
         self.combobox_curso.grid(row=3, column=0, pady=5, padx=10, sticky="W")
 
+
         ttk.Button(frame_entrys, text="Adicionar", command=lambda: self.adicionar_disciplina()).grid(row=3, column=1, pady=10)
+        ttk.Button(frame_entrys, text="Filtrar", command=lambda: self.filtrar_disciplina_curso()).grid(row=4, column=1,pady=10)
         ttk.Button(frame_entrys, text="Editar", command=lambda: self.editar_disciplina()).grid(row=5, column=1, pady=10)
         ttk.Button(frame_entrys, text="Excluir", command=lambda: self.exluir_disciplina()).grid(row=6, column=1, pady=10)
 
@@ -247,6 +249,15 @@ class TelaAdmin(tk.Frame):
         self.draw_curso_frame()
         self.draw_inscricoes_frame()
 
+    def filtrar_disciplina_curso(self):
+        id_curso = int({v: k for k, v in self.dict_cursos.items()}.get(self.combobox_curso.get()))
+
+        if id_curso:
+            data = self.disciplina_repository.get_disciplinas_by_curso(id_curso)
+            self.atualizar()
+            self.tree_disciplina.atualizar(data)
+            return
+        messagebox.showerror("ERRO", "Não foi possível filtrar")
 
     def deslogar(self):
        from Telas.TelaLogin import TelaLogin

@@ -5,8 +5,16 @@ class DisciplinaRepository:
     def __init__(self):
         self.banco = Banco.get_instance()
 
-    #def get_disciplinas(self):
-    #    return self.banco.select("SELECT * FROM disciplina")
+    def get_disciplinas_by_curso(self, id_curso: int):
+        return self.banco.select('''SELECT d.codigo, d.nome, c.nome
+                FROM 
+                    disciplina AS d
+                JOIN
+                    curso AS c 
+                ON 
+                    d.id_curso = c.id
+                WHERE   
+                    c.id = ?''', (id_curso,))
 
     def get_disciplinas(self):
         return self.banco.select('''SELECT d.codigo, d.nome, c.nome
