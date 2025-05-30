@@ -5,6 +5,7 @@ from Models.Curso import Curso
 from Repositorios.AlunoRepository import AlunoRepository
 from Repositorios.CursoRepository import CursoRepository
 from Repositorios.DisciplinaRepository import DisciplinaRepository
+from Repositorios.InscricaoRepository import InscricaoRepository
 from Telas.TelaAdmin import TelaAdmin
 from Telas.TelaAluno import TelaAluno
 from Telas.TelaCadastro import TelaCadastro

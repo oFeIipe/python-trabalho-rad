@@ -86,7 +86,7 @@ class TelaAdmin(tk.Frame):
         self.disciplina_frame.grid_columnconfigure(1, weight=3)
         self.disciplina_frame.grid_rowconfigure(0, weight=1)
 
-        colunas = [column[1] for column in self.disciplina_repository.get_columns_names()]
+        colunas = ['codigo', 'nome', 'nome_curso']
         width = int(900 / len(colunas))
 
         data = self.disciplina_repository.get_disciplinas()
@@ -133,7 +133,7 @@ class TelaAdmin(tk.Frame):
 
         ttk.Button(frame_entrys, text="Adicionar").grid(row=3, column=0, pady=10)
 
-        colunas = [column[1] for column in self.inscricao_repository.get_columns_names()]
+        colunas = ['ano', 'semestre', 'sim1', 'sim2', 'av', 'avs', 'nf', 'situacao', 'nome_aluno', 'nome_disciplina']
         data = self.inscricao_repository.get_inscricoes()
         width = int(900 / len(colunas))
 

@@ -8,14 +8,14 @@ class InscricaoRepository:
 
     def get_inscricoes(self):
         return self.banco.select('''SELECT 
-            ano,
-            semestre,
-            sim1,
-            sim2,
-            av,
-            avs,
-            nf,
-            situacao,
+            i.ano,
+            i.semestre,
+            i.sim1,
+            i.sim2,
+            i.av,
+            i.avs,
+            i.nf,
+            i.situacao,
             a.nome AS nome_aluno,
             d.nome AS nome_disciplina
         FROM 

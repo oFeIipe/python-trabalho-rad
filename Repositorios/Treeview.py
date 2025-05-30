@@ -18,11 +18,11 @@ class Treeview(ttk.Treeview):
         for i in data:
             if count % 2 == 0:
                 self.insert(parent='', index='end', iid=count, text='',
-                               values=data[count],
+                               values=data[count] or '',
                                tags=('evenrow',))
             else:
                 self.insert(parent='', index='end', iid=count, text='',
-                               values=data[count],
+                               values=data[count] or '',
                                tags=('oddrow',))
             count += 1
 

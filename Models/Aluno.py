@@ -25,4 +25,4 @@ class Aluno:
 
     def gerar_matricula(self):
         date = datetime.now()
-        self.matricula =  date.strftime("%Y%m") + str(randint(111111, 999999))
+        self.matricula =  date.strftime("%Y") + str(randint(10000, 99999))
