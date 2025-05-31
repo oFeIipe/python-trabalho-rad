@@ -7,7 +7,10 @@ class InscricaoRepository:
         self.banco = Banco.get_instance()
 
     def get_inscricoes(self):
-        return self.banco.select('''SELECT 
+        return self.banco.select("SELECT ano, semestre, sim1, sim2, av, avs, nf, situacao, matricula_aluno, codigo_disciplina FROM inscricao")
+
+    '''def get_inscricoes(self):
+        return self.banco.select('SELECT 
             i.ano,
             i.semestre,
             i.sim1,
@@ -23,7 +26,18 @@ class InscricaoRepository:
         JOIN 
             aluno a ON i.matricula_aluno = a.matricula
         JOIN 
-            disciplina d ON i.codigo_disciplina = d.codigo;''')
+            disciplina d ON i.codigo_disciplina = d.codigo;')'''
 
-    def get_columns_names(self):
-        return self.banco.select("PRAGMA table_info(inscricao)")
+    def insert_nota(self, nota: Nota, matricula: int, codigo: str):
+        self.banco.select('''UPDATE inscricao 
+            SET 
+                sim1 = ?,
+                sim2 = ?,
+                av = ?,
+                avs = ?,
+                nf = ?,
+                situacao = ?
+            WHERE
+                matricula_aluno = ?
+            AND
+                codigo_disciplina = ?''',(nota.sim1, nota.sim2, nota.av, nota.avs, nota.nf, nota.situacao, matricula, codigo))

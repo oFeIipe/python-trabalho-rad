@@ -13,24 +13,11 @@ class Treeview(ttk.Treeview):
 
         self.tag_configure('oddrow', background="white")
         self.tag_configure('evenrow', background="lightblue")
+
+        self.preencher(data)
+
+    def preencher(self, data):
         count = 0
-
-        for i in data:
-            if count % 2 == 0:
-                self.insert(parent='', index='end', iid=count, text='',
-                               values=data[count] or '',
-                               tags=('evenrow',))
-            else:
-                self.insert(parent='', index='end', iid=count, text='',
-                               values=data[count] or '',
-                               tags=('oddrow',))
-            count += 1
-
-    def atualizar(self, data):
-        for item in self.get_children():
-            self.delete(item)
-        count = 0
-
         for i in data:
             if count % 2 == 0:
                 self.insert(parent='', index='end', iid=count, text='',
@@ -41,3 +28,9 @@ class Treeview(ttk.Treeview):
                             values=data[count] or '',
                             tags=('oddrow',))
             count += 1
+
+    def atualizar(self, data):
+        for item in self.get_children():
+            self.delete(item)
+
+        self.preencher(data)
