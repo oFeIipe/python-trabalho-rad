@@ -1,11 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 from Banco.Banco import Banco
-from Models.Curso import Curso
 from Repositorios.AlunoRepository import AlunoRepository
-from Repositorios.CursoRepository import CursoRepository
-from Repositorios.DisciplinaRepository import DisciplinaRepository
-from Repositorios.InscricaoRepository import InscricaoRepository
 from Telas.TelaAdmin import TelaAdmin
 from Telas.TelaAluno import TelaAluno
 from Telas.TelaCadastro import TelaCadastro
@@ -60,9 +56,6 @@ class App(tk.Tk):
                        background=[('selected', "#347083")])
 
 if __name__ == "__main__":
-    import sys
-
-    print(sys.executable)
     app = App()
     app.mainloop()
     Banco.get_instance().close()

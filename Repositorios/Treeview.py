@@ -1,5 +1,4 @@
-from tkinter import ttk, Scrollbar, RIGHT, Y
-
+from tkinter import ttk
 
 class Treeview(ttk.Treeview):
     def __init__(self, parent, colunas, data, width, row=0):

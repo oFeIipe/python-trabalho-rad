@@ -45,6 +45,7 @@ class DisciplinaRepository:
 
     def remove(self, codigo: str):
         self.banco.execute("DELETE FROM disciplina WHERE codigo = ?", (codigo,))
+        self.banco.execute("DELETE FROM inscricao WHERE codigo_disciplina = ?", (codigo,))
 
     def get_disciplina_by_name(self, nome: str):
         return self.banco.select("SELECT codigo FROM disciplina WHERE nome = ?", (nome,))

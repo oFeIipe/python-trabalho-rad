@@ -1,7 +1,7 @@
 import tkinter as tk
 from datetime import datetime
+from pathlib import Path
 from tkinter import ttk, messagebox
-
 from Banco.Banco import Banco
 from Models.Curso import Curso
 from Models.Disciplina import Disciplina
@@ -406,8 +406,12 @@ class TelaAdmin(tk.Frame):
        self.controller.mostrar_tela(TelaLogin)
 
     def gerar_relatorio(self):
-        with pd.ExcelWriter('Relatorio/dados_completos.xlsx') as writer:
+        Path("Relatorios").mkdir(parents=True, exist_ok=True)
+
+        with pd.ExcelWriter('Relatorios/dados_completos.xlsx', engine='openpyxl') as writer:
             pd.read_sql('SELECT * FROM aluno', self.banco.get_conn()).to_excel(writer, sheet_name='Alunos', index=False)
             pd.read_sql('SELECT * FROM curso', self.banco.get_conn()).to_excel(writer, sheet_name='Cursos', index=False)
-            pd.read_sql('SELECT * FROM disciplina', self.banco.get_conn()).to_excel(writer, sheet_name='Disciplinas', index=False)
-            pd.read_sql('SELECT * FROM inscricao', self.banco.get_conn()).to_excel(writer, sheet_name='Inscrições',index=False)
+            pd.read_sql('SELECT * FROM disciplina', self.banco.get_conn()).to_excel(writer, sheet_name='Disciplinas',
+                                                                                    index=False, )
+            pd.read_sql('SELECT * FROM inscricao', self.banco.get_conn()).to_excel(writer, sheet_name='Inscrições',
+                                                                                   index=False)
