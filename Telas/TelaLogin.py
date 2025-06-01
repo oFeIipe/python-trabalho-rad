@@ -23,7 +23,7 @@ class TelaLogin(tk.Frame):
 
         ttk.Label(self, text="Senha:").grid(row=2, column=0, padx=10, pady=10, sticky="E")
 
-        self.entry_senha = ttk.Entry(self)
+        self.entry_senha = ttk.Entry(self, show="*")
         self.entry_senha.grid(row=2, column=1, padx=10, pady=10, sticky="W")
 
         ttk.Button(self, text="Entrar", width=15, command=self.entrar_tela_inicial).grid(row=3, column=0, padx=10, pady=20)
@@ -39,13 +39,14 @@ class TelaLogin(tk.Frame):
             return
 
         if matricula == "admin" and senha == "admin":
-            self.controller.geometry("1140x350")
+            self.controller.geometry("1190x343")
             self.controller.mostrar_tela(TelaAdmin)
             self.limpar_tela()
 
         elif self.verifica_login(int(matricula), senha):
-            self.controller.dados_compartilhados["matricula"].set(int(matricula))
-            self.controller.geometry("720x330")
+            self.controller.dados_compartilhados["matricula"].set(matricula)
+
+            self.controller.geometry("770x450")
             self.controller.mostrar_tela(TelaAluno)
             self.limpar_tela()
         else:
@@ -58,6 +59,7 @@ class TelaLogin(tk.Frame):
         senha_aluno = aluno[0][3]
 
         return senha_hash == senha_aluno
+
     def limpar_tela(self):
         self.entry_senha.delete(0, tk.END)
         self.entry_matricula.delete(0, tk.END)

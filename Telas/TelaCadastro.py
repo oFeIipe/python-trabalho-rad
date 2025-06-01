@@ -28,7 +28,7 @@ class TelaCadastro(tk.Frame):
 
         ttk.Label(self, text="Senha:").grid(row=2, column=0, padx=10, pady=10, sticky="E")
 
-        self.entry_senha = ttk.Entry(self, width=23)
+        self.entry_senha = ttk.Entry(self, width=23, show="*")
         self.entry_senha.grid(row=2, column=1, pady=10, sticky="W")
 
 
@@ -43,6 +43,7 @@ class TelaCadastro(tk.Frame):
 
 
     def criar_aluno(self):
+        from Telas.TelaAluno import TelaAluno
         try:
             nome = self.entry_nome.get()
             id_curso = int({v: k for k, v in self.dict_cursos.items()}.get(self.combobox.get()))
@@ -56,7 +57,16 @@ class TelaCadastro(tk.Frame):
             messagebox.showerror("ERRO", "Não foi possível fazer o cadastro")
         else:
             messagebox.showinfo("Bem-vindo", f"Seu cadastro foi realizado com sucesso!\nSua Matricula é: {aluno.matricula}")
-            self.voltar()
+            self.controller.dados_compartilhados["matricula"].set(aluno.matricula)
+
+            self.controller.geometry("770x450")
+            self.controller.mostrar_tela(TelaAluno)
+            self.limpar_tela()
+
+    def limpar_tela(self):
+        self.entry_senha.delete(0, tk.END)
+        self.entry_nome.delete(0, tk.END)
+        self.combobox.delete(0, tk.END)
 
     def voltar(self):
        from Telas.TelaLogin import TelaLogin

@@ -22,6 +22,10 @@ class App(tk.Tk):
         container = tk.Frame(self)
         container.pack(fill="both", expand=True)
 
+        self.dados_compartilhados = {
+            "matricula": tk.IntVar()
+        }
+
         self.frames = {}
 
         for Tela in (TelaLogin,TelaCadastro, TelaAluno, TelaAdmin):
@@ -38,6 +42,8 @@ class App(tk.Tk):
 
         if hasattr(frame, "atualiza_dados"):
             frame.atualiza_dados()
+        if hasattr(frame, "atualizar") :
+            frame.atualizar()
         frame.tkraise()
 
     def estilo(self):
@@ -52,10 +58,6 @@ class App(tk.Tk):
 
         self.style.map('Treeview',
                        background=[('selected', "#347083")])
-
-        self.dados_compartilhados = {
-            "matricula": tk.IntVar()
-        }
 
 if __name__ == "__main__":
     app = App()

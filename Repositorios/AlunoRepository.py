@@ -21,10 +21,12 @@ class AlunoRepository:
 
     def update_aluno(self, nome: str, matricula: int, senha: str):
         self.banco.execute("UPDATE aluno SET nome = ?, senha = ?  WHERE matricula = ?",
-                           (nome, matricula, senha))
+                           (nome, senha, matricula))
 
-    def get_matriculas(self):
-        return self.banco.select("SELECT matricula FROM aluno", ())
+    def update_nome(self, nome: str, matricula: int):
+        self.banco.execute("UPDATE aluno SET nome = ?  WHERE matricula = ?",
+                           (nome, matricula))
 
     def delete_aluno(self, matricula: int) -> None:
         self.banco.execute("DELETE FROM aluno WHERE matricula = ?", (matricula,))
+        self.banco.execute("DELETE FROM inscricao WHERE matricula_aluno = ?", (matricula,))

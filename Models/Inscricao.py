@@ -1,6 +1,4 @@
 class Inscricao:
-    def __init__(self, ano: int, semestre: int, matricula: int, codigo: str) -> None:
-        self.ano = ano
-        self.semestre = semestre
+    def __init__(self, matricula: int, codigo: str) -> None:
         self.aluno = matricula
         self.disciplina = codigo
