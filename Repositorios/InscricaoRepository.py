@@ -8,7 +8,7 @@ class InscricaoRepository:
 
     def insert_inscricao(self, inscricao: Inscricao):
         self.banco.execute('''INSERT INTO inscricao (matricula_aluno, codigo_disciplina) 
-        VALUES (?, ?)''', (inscricao.aluno, inscricao.disciplina))
+        VALUES (%s, %s)''', (inscricao.aluno, inscricao.disciplina))
 
     def get_inscricoes(self):
         return self.banco.select('''SELECT 
@@ -45,19 +45,19 @@ class InscricaoRepository:
             disciplina as d ON d.codigo = i.codigo_disciplina
         JOIN
             aluno AS a ON i.matricula_aluno = a.matricula
-        WHERE d.id_curso = ?''', (id,))
+        WHERE d.id_curso = %s''', (id,))
 
     def insert_nota(self, nota: Nota, id: int):
         self.banco.execute('''UPDATE inscricao 
             SET 
-                sim1 = ?,
-                sim2 = ?,
-                av = ?,
-                avs = ?,
-                nf = ?,
-                situacao = ?
+                sim1 = %s,
+                sim2 = %s,
+                av = %s,
+                avs = %s,
+                nf = %s,
+                situacao = %s
             WHERE
-                id = ?''',(nota.sim1, nota.sim2, nota.av, nota.avs, nota.nf, nota.situacao, id))
+                id = %s''',(nota.sim1, nota.sim2, nota.av, nota.avs, nota.nf, nota.situacao, id))
 
     def get_inscricoes_by_aluno(self, matricula: int):
         return self.banco.select('''SELECT 
@@ -75,7 +75,7 @@ class InscricaoRepository:
         JOIN
             aluno As a ON i.matricula_aluno = a.matricula
         WHERE 
-            i.matricula_aluno = ?''', (matricula,))
+            i.matricula_aluno = %s''', (matricula,))
 
     def get_inscricoes_by_disciplina(self, codigo: str):
         return self.banco.select('''SELECT 
@@ -94,7 +94,7 @@ class InscricaoRepository:
                    disciplina as d ON d.codigo = i.codigo_disciplina
                JOIN
                    aluno AS a ON i.matricula_aluno = a.matricula
-               WHERE d.codigo = ?''', (codigo,))
+               WHERE d.codigo = %s''', (codigo,))
 
     def cancela_inscricao(self, matricula: int, codigo: str):
-        self.banco.execute("DELETE FROM inscricao WHERE matricula_aluno = ? AND codigo_disciplina = ?", (matricula, codigo))
+        self.banco.execute("DELETE FROM inscricao WHERE matricula_aluno = %s AND codigo_disciplina = %s", (matricula, codigo))

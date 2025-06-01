@@ -2,7 +2,7 @@ import tkinter as tk
 from datetime import datetime
 from pathlib import Path
 from tkinter import ttk, messagebox
-from Banco.Banco import Banco
+from Banco.Banco import Banco, get_conn
 from Models.Curso import Curso
 from Models.Disciplina import Disciplina
 from Models.Nota import Nota
@@ -70,7 +70,7 @@ class TelaAdmin(tk.Frame):
         ttk.Button(frame_entrys, text="Adicionar", command=self.adicionar_curso).place(y=120)
         ttk.Button(frame_entrys, text="Editar", command=self.editar_curso).place(y=160)
         ttk.Button(frame_entrys, text="Excluir", command=self.exluir_curso).place(y=200)
-        colunas = [column[1] for column in self.curso_repository.get_columns_names()]
+        colunas = ['id', 'nome']
         data = self.curso_repository.get_cursos()
         width = [300, 600]
 
@@ -410,9 +410,8 @@ class TelaAdmin(tk.Frame):
         Path("Relatorios").mkdir(parents=True, exist_ok=True)
 
         with pd.ExcelWriter('Relatorios/dados_completos.xlsx', engine='openpyxl') as writer:
-            pd.read_sql('SELECT * FROM aluno', self.banco.get_conn()).to_excel(writer, sheet_name='Alunos', index=False)
-            pd.read_sql('SELECT * FROM curso', self.banco.get_conn()).to_excel(writer, sheet_name='Cursos', index=False)
-            pd.read_sql('SELECT * FROM disciplina', self.banco.get_conn()).to_excel(writer, sheet_name='Disciplinas',
-                                                                                    index=False, )
-            pd.read_sql('SELECT * FROM inscricao', self.banco.get_conn()).to_excel(writer, sheet_name='Inscrições',
-                                                                                   index=False)
+            conn = get_conn()
+            pd.read_sql('SELECT * FROM aluno', conn).to_excel(writer, sheet_name='Alunos', index=False)
+            pd.read_sql('SELECT * FROM curso', conn).to_excel(writer, sheet_name='Cursos', index=False)
+            pd.read_sql('SELECT * FROM disciplina', conn).to_excel(writer, sheet_name='Disciplinas', index=False)
+            pd.read_sql('SELECT * FROM inscricao', conn).to_excel(writer, sheet_name='Inscrições', index=False)
