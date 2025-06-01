@@ -63,6 +63,8 @@ class TelaCadastro(tk.Frame):
             self.controller.mostrar_tela(TelaAluno)
             self.limpar_tela()
 
+
+
     def limpar_tela(self):
         self.entry_senha.delete(0, tk.END)
         self.entry_nome.delete(0, tk.END)
@@ -70,5 +72,6 @@ class TelaCadastro(tk.Frame):
 
     def voltar(self):
        from Telas.TelaLogin import TelaLogin
+       self.limpar_tela()
        self.controller.geometry("300x200")
        self.controller.mostrar_tela(TelaLogin)

@@ -82,6 +82,9 @@ class Banco:
             print("ERRO DE CONECTIVIDADE:", e)
             return []
 
+    def get_conn(self):
+        return self.__conn
+
     def close(self):
         self.__cursor.close()
         self.__conn.close()

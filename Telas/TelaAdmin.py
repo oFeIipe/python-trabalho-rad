@@ -1,8 +1,8 @@
 import tkinter as tk
 from datetime import datetime
-from socket import socket
 from tkinter import ttk, messagebox
 
+from Banco.Banco import Banco
 from Models.Curso import Curso
 from Models.Disciplina import Disciplina
 from Models.Nota import Nota
@@ -11,7 +11,7 @@ from Repositorios.CursoRepository import CursoRepository
 from Repositorios.DisciplinaRepository import DisciplinaRepository
 from Repositorios.InscricaoRepository import InscricaoRepository
 from Repositorios.Treeview import Treeview
-
+import pandas as pd
 
 class TelaAdmin(tk.Frame):
     def __init__(self, parent, controller):
@@ -21,6 +21,7 @@ class TelaAdmin(tk.Frame):
         self.aluno_repository = AlunoRepository()
         self.disciplina_repository = DisciplinaRepository()
         self.inscricao_repository = InscricaoRepository()
+        self.banco = Banco.get_instance()
 
         self.clicked_filter = False
 
@@ -45,6 +46,7 @@ class TelaAdmin(tk.Frame):
         self.notebook.add(self.disciplina_frame, text="Disciplina")
         self.notebook.add(self.inscricoes_frame, text="Inscrições")
 
+        ttk.Button(self, text="Gerar relatório", width=15, command=self.gerar_relatorio).place(x=950, y=10)
         ttk.Button(self, text="Sair", width=5, command=self.deslogar).place(x=1060, y=10)
 
 
@@ -402,3 +404,10 @@ class TelaAdmin(tk.Frame):
        self.atualizar()
        self.controller.geometry("300x200")
        self.controller.mostrar_tela(TelaLogin)
+
+    def gerar_relatorio(self):
+        with pd.ExcelWriter('Relatorio/dados_completos.xlsx') as writer:
+            pd.read_sql('SELECT * FROM aluno', self.banco.get_conn()).to_excel(writer, sheet_name='Alunos', index=False)
+            pd.read_sql('SELECT * FROM curso', self.banco.get_conn()).to_excel(writer, sheet_name='Cursos', index=False)
+            pd.read_sql('SELECT * FROM disciplina', self.banco.get_conn()).to_excel(writer, sheet_name='Disciplinas', index=False)
+            pd.read_sql('SELECT * FROM inscricao', self.banco.get_conn()).to_excel(writer, sheet_name='Inscrições',index=False)

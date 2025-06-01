@@ -95,3 +95,6 @@ class InscricaoRepository:
                JOIN
                    aluno AS a ON i.matricula_aluno = a.matricula
                WHERE d.codigo = ?''', (codigo,))
+
+    def cancela_inscricao(self, matricula: int, codigo: str):
+        self.banco.execute("DELETE FROM inscricao WHERE matricula_aluno = ? AND codigo_disciplina = ?", (matricula, codigo))

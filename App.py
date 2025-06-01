@@ -60,5 +60,9 @@ class App(tk.Tk):
                        background=[('selected', "#347083")])
 
 if __name__ == "__main__":
+    import sys
+
+    print(sys.executable)
     app = App()
     app.mainloop()
+    Banco.get_instance().close()

@@ -33,16 +33,20 @@ class TelaAluno(tk.Frame):
         self.notebook.add(self.disciplinas_frame, text="Disciplinas")
         self.notebook.add(self.aluno_frame, text="Aluno")
 
+        self.label_bem_vindo = ttk.Label(self, text="", font=("Arial", 16, "bold"))
+        self.label_bem_vindo.grid(row=0, column=0, pady=10, padx=10)
+
+        self.botao_sair = ttk.Button(self, text="Sair", width=5, command=self.deslogar)
+        self.botao_sair.place(x=680, y=10)
+
         self.clicked_bool = False
     def atualiza_dados(self):
         self.grid_columnconfigure(1, weight=1)
 
         self.matricula = self.controller.dados_compartilhados["matricula"].get()
         self.aluno = self.aluno_repository.get_aluno_by_matricula(self.matricula)
-        ttk.Label(self, text=f"Bem vindo {self.aluno[0][1]}!", font=("Arial", 16, "bold")).grid(row=0, column=0,
-                                                                            pady=10,
-                                                                            padx=10)
-        ttk.Button(self, text="Sair", width=5, command=self.deslogar).place(x=680, y=10)
+
+        self.label_bem_vindo.config(text=f"Bem vindo {self.aluno[0][1]}!")
 
         self.draw_disciplinas_frame()
         self.draw_notas_frame()
@@ -66,9 +70,11 @@ class TelaAluno(tk.Frame):
         data = self.inscricao_repository.get_inscricoes_by_aluno(self.matricula)
         width = [250, 80, 80, 80, 80, 80, 100]
 
-
         if len(data) > 0:
             self.tree_notas = Treeview(frame_tree, colunas, data, width, row=1)
+            ttk.Button(frame_label, text="Cancelar inscricao", command=self.cancelar_inscricao).grid(row=0, column=1,
+                                                                                                     padx=520,
+                                                                                                     sticky="nsew")
         else:
             ttk.Label(frame_tree, text="Você não está matriculado em nenhuma disciplina",
                       font=("Arial", 12, "bold")).grid(row=1, column=0, pady=10, padx=10, sticky="nsew")
@@ -124,7 +130,7 @@ class TelaAluno(tk.Frame):
         self.matricula_entry = ttk.Entry(frame_entrys)
         self.matricula_entry.insert(0, self.matricula)
         self.matricula_entry.grid(row=1, column=0, padx=10)
-        self.matricula_entry.config(state='disabled')
+        self.matricula_entry.config(state='readonly')
 
         ttk.Label(frame_entrys, text="Nome: ").grid(row=0, column=1, sticky="NW", padx=10)
         self.nome_aluno_entry = ttk.Entry(frame_entrys)
@@ -161,6 +167,18 @@ class TelaAluno(tk.Frame):
         if resposta:
             self.aluno_repository.delete_aluno(self.matricula)
             self.deslogar()
+
+    def cancelar_inscricao(self):
+        selected_item = self.tree_notas.focus()
+
+        if selected_item:
+            values = self.tree_notas.item(selected_item, 'values')
+            resposta = messagebox.askyesno("ATENÇÃO", f"Deseja mesmo cancelar sua inscrição na disciplina {values[0].upper()}?")
+            if resposta:
+                codigo = self.disciplina_repository.get_disciplina_by_name(values[0])
+                self.inscricao_repository.cancela_inscricao(self.matricula, codigo[0][0])
+                self.atualizar()
+
 
     def editar_dados(self):
         try:
