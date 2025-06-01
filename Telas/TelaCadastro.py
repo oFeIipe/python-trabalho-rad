@@ -63,7 +63,9 @@ class TelaCadastro(tk.Frame):
             self.controller.mostrar_tela(TelaAluno)
             self.limpar_tela()
 
-
+    def atualizar(self):
+        self.dict_cursos = dict(self.curso_repository.get_cursos())
+        self.combobox.config(values=list(self.dict_cursos.values()))
 
     def limpar_tela(self):
         self.entry_senha.delete(0, tk.END)

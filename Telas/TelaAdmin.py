@@ -339,6 +339,7 @@ class TelaAdmin(tk.Frame):
                 self.curso_repository.remove(values[0])
                 data = self.curso_repository.get_cursos()
                 self.tree_curso.atualizar(data)
+                self.dict_cursos = dict(self.curso_repository.get_cursos())
                 self.atualizar()
                 return
             else:
