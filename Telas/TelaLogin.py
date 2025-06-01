@@ -66,5 +66,6 @@ class TelaLogin(tk.Frame):
 
     def entrar_cadastro_aluno(self):
         from Telas.TelaCadastro import TelaCadastro
+        self.limpar_tela()
         self.controller.geometry("230x230")
         self.controller.mostrar_tela(TelaCadastro)
