@@ -7,8 +7,6 @@ from Telas.TelaAluno import TelaAluno
 from Telas.TelaCadastro import TelaCadastro
 from Telas.TelaLogin import TelaLogin
 
-aluno_repository = AlunoRepository()
-
 class App(tk.Tk):
     def __init__(self):
         super().__init__()
