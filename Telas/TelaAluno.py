@@ -22,6 +22,8 @@ class TelaAluno(tk.Frame):
 
         self.controller = controller
 
+
+
         self.notebook = ttk.Notebook(self, width=770)
         self.notebook.grid(column=0, row=1, pady=30)
 
@@ -227,6 +229,7 @@ class TelaAluno(tk.Frame):
         return senha_hash == senha_aluno
 
     def atualizar(self):
+        self.controller.title("Tela do Aluno")
         self.draw_aluno_frame()
         self.draw_notas_frame()
         self.draw_disciplinas_frame()

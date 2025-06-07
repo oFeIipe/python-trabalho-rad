@@ -17,6 +17,8 @@ class TelaCadastro(tk.Frame):
 
         self.controller = controller
 
+
+
         ttk.Label(self, text="Cadastro", font=("Arial", 16, "bold")).grid(row=0, column=1,
                                                                                             columnspan=3, pady=10,
                                                                                             padx=10)
@@ -64,6 +66,7 @@ class TelaCadastro(tk.Frame):
             self.limpar_tela()
 
     def atualizar(self):
+        self.controller.title("Cadastro")
         self.dict_cursos = dict(self.curso_repository.get_cursos())
         self.combobox.config(values=list(self.dict_cursos.values()))
 

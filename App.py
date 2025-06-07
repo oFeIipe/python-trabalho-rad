@@ -7,12 +7,10 @@ from Telas.TelaAluno import TelaAluno
 from Telas.TelaCadastro import TelaCadastro
 from Telas.TelaLogin import TelaLogin
 
-aluno_repository = AlunoRepository()
-
 class App(tk.Tk):
     def __init__(self):
         super().__init__()
-        self.title("Sistema de Notas - Login")
+        self.title("Login")
         self.geometry("300x200")
         self.style = ttk.Style()
         container = tk.Frame(self)
@@ -33,7 +31,6 @@ class App(tk.Tk):
 
     def mostrar_tela(self, tela):
         frame = self.frames[tela]
-
         self.estilo()
 
         if hasattr(frame, "atualiza_dados"):

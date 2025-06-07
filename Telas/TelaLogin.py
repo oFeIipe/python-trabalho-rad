@@ -60,6 +60,9 @@ class TelaLogin(tk.Frame):
 
         return senha_hash == senha_aluno
 
+    def atualizar(self):
+        self.controller.title("Login")
+
     def limpar_tela(self):
         self.entry_senha.delete(0, tk.END)
         self.entry_matricula.delete(0, tk.END)

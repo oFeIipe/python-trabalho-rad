@@ -48,7 +48,6 @@ comandos_criacao = [
     """
 ]
 
-
 def get_conn():
     engine = create_engine(os.getenv('CONN'))
     return engine.connect()

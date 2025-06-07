@@ -347,6 +347,7 @@ class TelaAdmin(tk.Frame):
         messagebox.showerror("ERRO!", "Não foi possível remover o curso")
 
     def atualizar(self):
+        self.controller.title("Tela de administrador")
         self.draw_disciplina_frame()
         self.draw_curso_frame()
         self.draw_inscricoes_frame()
